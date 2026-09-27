@@ -17,7 +17,9 @@ import dj_database_url
 try:
     from decouple import config
 except ImportError:
-    config = lambda name, default=None: os.environ.get(name, default)
+    def config(name, default=None):
+        return os.environ.get(name, default)
+
 
 
 
