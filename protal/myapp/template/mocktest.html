@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Mock Tests | PrepNova{% endblock %}
+
+{% block content %}
+  <section class="page-shell">
+    <div class="page-title">
+      <div class="eyebrow">Mock tests</div>
+      <h1>Simulate placement rounds before the real one.</h1>
+      <p>Run mixed aptitude, coding, and interview-style tests. Attempts are stored in your dashboard after login.</p>
+    </div>
+
+    <div class="grid four">
+      <div class="metric-card">
+        <span>Completed</span>
+        <strong>{{ stats.tests_completed }}</strong>
+        <p>Tests completed by you</p>
+      </div>
+      <div class="metric-card">
+        <span>Average</span>
+        <strong>{{ stats.average_score }}%</strong>
+        <p>Your average test score</p>
+      </div>
+      <div class="metric-card">
+        <span>Interview</span>
+        <strong>{{ stats.mock_interviews }}</strong>
+        <p>Interview attempts</p>
+      </div>
+      <div class="metric-card">
+        <span>Questions</span>
+        <strong>{{ stats.questions_solved }}</strong>
+        <p>Tracked question attempts</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-shell">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">Test catalog</div>
+        <h2>Choose a mock test.</h2>
+      </div>
+      <p>Starting a test creates a new attempt and redirects back to this page.</p>
+    </div>
+
+    <div class="grid three">
+      {% for test in tests %}
+        <article class="test-card" style="{% if test.is_locked %}opacity: 0.65; position: relative;{% endif %}">
+          {% if test.is_locked %}
+            <div class="lock-overlay" style="position: absolute; top: 12px; right: 12px; font-size: 1.25rem;">🔒</div>
+          {% endif %}
+          <div class="badge-row">
+            <span class="badge {{ test.difficulty }}">{{ test.get_difficulty_display }}</span>
+            <span class="badge">{{ test.duration_minutes }} min</span>
+          </div>
+          <h3>{{ test.title }}</h3>
+          <p>Questions: {{ test.question_count }}</p>
+          <p>Topics: {{ test.topics }}</p>
+          
+          {% if test.is_locked %}
+            <div class="lock-message" style="margin-top: auto; padding: 8px; font-size: 0.85rem; color: var(--rose); background: rgba(244, 63, 94, 0.08); border-radius: 4px; border: 1px solid rgba(244, 63, 94, 0.18);">
+              {{ test.lock_reason }}
+            </div>
+            <button class="btn btn-ghost btn-wide btn-small" style="margin-top: 12px;" disabled>Locked</button>
+          {% else %}
+            <form method="post" action="{% url 'start_test' test.id %}">
+              {% csrf_token %}
+              <button class="btn btn-primary btn-wide" type="submit" data-loading-text="Starting...">Start Test</button>
+            </form>
+          {% endif %}
+        </article>
+      {% empty %}
+        <div class="empty-note">No mock tests are available yet.</div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section-shell">
+    <div class="panel">
+      <h2 class="panel-title">Performance Progress</h2>
+      <div class="progress-list">
+        <div class="progress-item">
+          <div class="progress-meta"><span>Aptitude Round Average</span><span>{{ stats.aptitude_avg|default:0 }}%</span></div>
+          <div class="progress-track"><div class="progress-fill" data-progress="{{ stats.aptitude_avg|default:0 }}"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-meta"><span>Coding Round Average</span><span>{{ stats.coding_avg|default:0 }}%</span></div>
+          <div class="progress-track"><div class="progress-fill amber" data-progress="{{ stats.coding_avg|default:0 }}"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-meta"><span>Technical Interview Average</span><span>{{ stats.interview_avg|default:0 }}%</span></div>
+          <div class="progress-track"><div class="progress-fill rose" data-progress="{{ stats.interview_avg|default:0 }}"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

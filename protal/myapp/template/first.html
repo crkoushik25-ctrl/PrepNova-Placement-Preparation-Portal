@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}PrepNova | Placement Preparation{% endblock %}
+
+{% block content %}
+  <section class="hero-shell">
+    <div class="hero-copy">
+      <div class="eyebrow">Placement prep workspace</div>
+      <h1>PrepNova helps you practice, measure, and improve.</h1>
+      <p>
+        Work through aptitude sets, coding challenges, mock tests, and a resume builder from one clean Django application.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{% url 'getstarted' %}">Get Started</a>
+        <a class="btn btn-ghost" href="{% url 'mocktest' %}">Take Mock Test</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-label="PrepNova practice dashboard preview">
+      <div class="visual-topbar">
+        <span class="visual-dot"></span>
+        <span class="visual-dot"></span>
+        <span class="visual-dot"></span>
+      </div>
+      <div class="visual-body">
+        <div class="score-strip">
+          <div class="mini-score">
+            <strong>87%</strong>
+            <span>Aptitude</span>
+          </div>
+          <div class="mini-score">
+            <strong>42</strong>
+            <span>Problems</span>
+          </div>
+          <div class="mini-score">
+            <strong>91%</strong>
+            <span>Resume</span>
+          </div>
+        </div>
+        <div class="mock-editor">
+          <div class="code-window">
+            <div class="code-line accent"></div>
+            <div class="code-line medium"></div>
+            <div class="code-line short"></div>
+            <div class="code-line"></div>
+            <div class="code-line accent"></div>
+            <div class="code-line short"></div>
+          </div>
+          <div class="task-list">
+            <div class="task-item"><span>Arrays</span><span class="task-pill">Live</span></div>
+            <div class="task-item"><span>Percentages</span><span>12 min</span></div>
+            <div class="task-item"><span>Resume ATS</span><span>91%</span></div>
+            <div class="task-item"><span>Mock Test</span><span>Ready</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats banner -->
+  <section class="home-stats-band">
+    <div class="home-stats-inner">
+      <div class="home-stat">
+        <strong>15+</strong>
+        <span>Coding Problems</span>
+      </div>
+      <div class="home-stat-divider"></div>
+      <div class="home-stat">
+        <strong>60+</strong>
+        <span>Aptitude Questions</span>
+      </div>
+      <div class="home-stat-divider"></div>
+      <div class="home-stat">
+        <strong>5</strong>
+        <span>Languages Supported</span>
+      </div>
+      <div class="home-stat-divider"></div>
+      <div class="home-stat">
+        <strong>100%</strong>
+        <span>Free to Use</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-shell">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">Practice areas</div>
+        <h2>Choose the skill you want to sharpen today.</h2>
+      </div>
+      <p>Each section is connected to a Django route, so every navigation link opens a working page.</p>
+    </div>
+
+    <div class="grid three">
+      <a class="path-card" href="{% url 'aptitude' %}">
+        <span class="icon-tile">A</span>
+        <div>
+          <h3>Aptitude Practice</h3>
+          <p>Quantitative, reasoning, and verbal preparation with timed tests.</p>
+        </div>
+      </a>
+      <a class="path-card" href="{% url 'coding' %}">
+        <span class="icon-tile green">C</span>
+        <div>
+          <h3>Coding Challenges</h3>
+          <p>Build programming confidence with DSA and logic practice.</p>
+        </div>
+      </a>
+      <a class="path-card" href="{% url 'resume' %}">
+        <span class="icon-tile amber">R</span>
+        <div>
+          <h3>Resume Builder</h3>
+          <p>Create an ATS-friendly resume and preview it as you type.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA section -->
+  <section class="home-cta-section">
+    <div class="home-cta-inner">
+      <div class="home-cta-copy">
+        <div class="eyebrow">Ready to start?</div>
+        <h2>Ace your placement season with PrepNova.</h2>
+        <p>Create a free account and track your aptitude scores, coding progress, and resume quality in one place.</p>
+      </div>
+      <div class="home-cta-actions">
+        {% if request.user.is_authenticated %}
+          <a class="btn btn-primary" href="{% url 'dashboard' %}">Go to Dashboard</a>
+          <a class="btn btn-ghost" href="{% url 'coding' %}">Practice Coding</a>
+        {% else %}
+          <a class="btn btn-primary" href="{% url 'login' %}">Create Free Account</a>
+          <a class="btn btn-ghost" href="{% url 'mocktest' %}">Try Mock Test</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+<style>
+  /* Stats band */
+  .home-stats-band {
+    background: linear-gradient(90deg, rgba(45,212,191,0.06), rgba(139,92,246,0.06));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin: 2rem 0 0;
+  }
+
+  .home-stats-inner {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 32px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .home-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0 48px;
+    text-align: center;
+  }
+
+  .home-stat strong {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--teal), var(--violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .home-stat span {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .home-stat-divider {
+    width: 1px;
+    height: 48px;
+    background: var(--line);
+    flex-shrink: 0;
+  }
+
+  /* CTA section */
+  .home-cta-section {
+    margin: 4rem 0 0;
+    padding: 0 16px;
+  }
+
+  .home-cta-inner {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 56px 48px;
+    border-radius: 20px;
+    background:
+      radial-gradient(circle at 80% 50%, rgba(139,92,246,0.12), transparent 50%),
+      linear-gradient(135deg, rgba(45,212,191,0.1), rgba(245,158,11,0.06));
+    border: 1px solid rgba(45,212,191,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .home-cta-copy {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .home-cta-copy h2 {
+    margin: 8px 0 12px;
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+  }
+
+  .home-cta-copy p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 480px;
+  }
+
+  .home-cta-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 720px) {
+    .home-stat { padding: 0 24px; }
+    .home-stat-divider { display: none; }
+    .home-stats-inner { gap: 20px; }
+    .home-cta-inner { padding: 36px 24px; flex-direction: column; }
+  }
+</style>
+{% endblock %}
+
