@@ -15,10 +15,11 @@ import os
 import dj_database_url
 
 try:
-    from decouple import config
+    from decouple import config  # pyrefly: ignore [missing-import] # type: ignore
 except ImportError:
     def config(name, default=None):
         return os.environ.get(name, default)
+
 
 
 

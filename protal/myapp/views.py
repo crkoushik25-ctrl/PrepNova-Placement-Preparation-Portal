@@ -12,9 +12,10 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 
-from .forms import AptitudeQuestionForm, PrepTestForm, CodingQuestionForm
-from .models import Activity, AptitudeQuestion, AttemptAnswer, PrepTest, Resume, TestAttempt, UserProfile, CodingQuestion, CodingSubmission
-from .coding_data import CODING_PROBLEMS
+from .forms import AptitudeQuestionForm, PrepTestForm, CodingQuestionForm  # pyrefly: ignore [missing-import] # type: ignore
+from .models import Activity, AptitudeQuestion, AttemptAnswer, PrepTest, Resume, TestAttempt, UserProfile, CodingQuestion, CodingSubmission  # pyrefly: ignore [missing-import] # type: ignore
+from .coding_data import CODING_PROBLEMS  # pyrefly: ignore [missing-import] # type: ignore
+
 
 
 DEFAULT_TESTS = [
