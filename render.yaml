@@ -2,12 +2,11 @@ services:
   - type: web
     name: prepnova-portal
     env: python
-    rootDir: protal
     buildCommand: "./build.sh"
-    startCommand: "gunicorn protal.wsgi:application"
+    startCommand: "gunicorn --pythonpath protal protal.wsgi:application"
     envVars:
       - key: PYTHON_VERSION
-        value: 3.13.0
+        value: 3.13.2
       - key: DEBUG
         value: "False"
       - key: SECRET_KEY
