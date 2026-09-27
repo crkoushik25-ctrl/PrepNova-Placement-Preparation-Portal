@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
-from decouple import config
+
+try:
+    from decouple import config
+except ImportError:
+    config = lambda name, default=None: os.environ.get(name, default)
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
